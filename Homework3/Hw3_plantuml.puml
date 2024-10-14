@@ -1,0 +1,276 @@
+'Part 1)'
+@startuml
+Employee <|-- SalariedEmployee : extends
+Employee : -String firstName
+Employee : -String socialSecurityNumber
+Employee : +String getFirstName()
+Employee : +void setFirstName(String firstName)
+Employee : +String getLastName()
+Employee : +void setLastName(String lastName)
+Employee : +String getSocialSecurityNumber()
+Employee : +void setSocialSecurityNumber(String socialSecurityNumber)
+Employee : +String toString()
+
+SalariedEmployee : -int weeklySalary
+SalariedEmployee : +int getWeeklySalary()
+SalariedEmployee : +void setWeeklySalary()
+SalariedEmployee : +String toString()
+
+Employee <|-- HourlyEmployee : extends
+HourlyEmployee : -int wage
+HourlyEmployee : -int hoursWorked
+HourlyEmployee : +int getWage()
+HourlyEmployee : +void setWage()
+HourlyEmployee : +int getHoursWorked()
+HourlyEmployee : +void setHoursWorked()
+HourlyEmployee : +String toString()
+
+Employee <|-- BaseEmployee : extends
+BaseEmployee : -int baseSalary
+BaseEmployee : +int getBaseSalary()
+BaseEmployee : +int getBaseSalary()
+BaseEmployee : +void setBaseSalary()
+BaseEmployee : +String toString()
+
+Employee <|-- ComissionEmployee : extends
+ComissionEmployee : -int comissionRate
+ComissionEmployee : -int grossSales
+ComissionEmployee : +int getComissionRate()
+ComissionEmployee : +void setComissionRate()
+ComissionEmployee : +int getGrossSales()
+ComissionEmployee : +void setGrossSales()
+ComissionEmployee : +String toString()
+
+@enduml
+
+'Easier way to do it after reading documentation and getting the hang of it'
+
+Part 2)
+@startuml
+class Ship {
+    - String shipName
+    - String yearBuilt
+
+    + String getShipName()
+    + void setShipName(String shipName)
+    + String getYearBuilt()
+    + void setYearBuilt(String yearBuilt)
+    + String toString()
+    + void printShip()
+}
+
+class CargoShip extends Ship {
+    - int cargoCapacityInTonnage
+    
+    + int getCargoCapacityInTonnage()
+    + void setCargoCapacityInTonnage(int cargoCapacityInTonnage)
+    + String toString()
+}
+
+class CruiseShip extends Ship {
+    - int maxNumberPassengers
+    
+    + int getMaxNumberPassengers()
+    + void setMaxNumberPassengers(int maxNumberPassengers)
+    + String toString()
+}
+@enduml
+
+'Part 3)'
+@startuml
+
+class Instructor {
+    - String firstName
+    - String lastName
+    - String officeNumber
+
+    + String getFirstName()
+    + void setFirstName(String firstName)
+    + String getLastName()
+    + void setLastName(String lastName)
+    + String getOfficeNumber()
+    + void setOfficeNumber(String officeNumber)
+    + String toString()
+}
+
+class Textbook {
+    - String title
+    - String author
+    - String publisher
+
+    + String getTitle()
+    + void setTitle(String title)
+    + String getAuthor()
+    + void setAuthor(String author)
+    + String getPublisher()
+    + void setPublisher(String publisher)
+    + String toString()
+}
+
+class Course {
+    - String name
+    - ArrayList<Instructor> instructors
+    - ArrayList<Textbook> textbooks
+
+    + String getName()
+    + void setName(String name)
+    + ArrayList<Instructor> getInstructors()
+    + void setInstructor(Instructor instructor)
+    + ArrayList<Textbook> getTextbooks()
+    + void setTextbook(Textbook textbook)
+    + String toString()
+    + void printCourse()
+}
+
+Course o-- Instructor : has
+Course o-- Textbook : has
+
+@enduml
+
+'Part 4 - from part 2 after all 3 ships have been dynamically created)'
+@startuml
+
+class File {
+    - String name
+    
+    + File(String name)
+    + String getName()
+    + void setName(String name)
+    + String toString()
+}
+
+class Folder {
+    - String name
+    - ArrayList<Folder> subfolders
+    - ArrayList<File> files
+    
+    + Folder()
+    + String getName()
+    + void setName(String name)
+    + void addSubfolder(String subFolderName)
+    + Folder getSubfolder(String subFolderName)
+    + void removeSubfolder(String subFolderName)
+    + void addFile(String fileName)
+    + boolean removeFile(File file)
+    + String toString()
+    + void printFolderContents()
+}
+
+Folder *-- File : contains
+Folder *-- Folder : contains
+
+@enduml
+
+'OBJECT DIAGRAMS:'
+'Part 1)'
+@startuml
+
+object ship1 {
+    shipName = "Sea Explorer"
+    yearBuilt = "2001"
+}
+
+object cargoShip1 {
+    shipName = "Ocean Carrier"
+    cargoCapacityInTonnage = 50000
+}
+
+object cruiseShip1 {
+    shipName = "Luxury Voyager"
+    maxNumberPassengers = 3000
+}
+
+ship1 : Ship
+cargoShip1 : CargoShip
+cruiseShip1 : CruiseShip
+
+ship1 <|-- cargoShip1
+ship1 <|-- cruiseShip1
+
+@enduml
+
+'Part 2 - from part 3 after step 5, before adding a second instructor and book)'
+@startuml
+
+object instructor1 {
+    firstName = "Nima"
+    lastName = "Davarpanah"
+    officeNumber = "3-2636"
+}
+
+object textbook1 {
+    title = "CleanCode: A Handbook of Agile Software Craftsmanship"
+    author = "Robert Cecil Martin"
+    publisher = "Pearson"
+}
+
+object course1 {
+    name = "CS5800 - Advanced Software Engineering"
+    instructors = instructor1
+    textbooks = textbook1
+}
+
+course1 *-- instructor1
+course1 *-- textbook1
+
+
+@enduml
+
+
+'Part 3 - from part 4 after step 2 when the app folder is deleted)'
+@startuml
+
+object phpDemo1 {
+    name = "php_demo1"
+}
+
+object sourceFiles {
+    name = "Source Files"
+}
+
+object includePath {
+    name = "Include Path"
+}
+
+object remoteFiles {
+    name = "Remote Files"
+}
+
+object cache {
+    name = "cache"
+}
+
+object phalcon {
+    name = ".phalcon"
+}
+
+object publicFolder {
+    name = "public"
+}
+
+object htaccess {
+    name = ".htaccess"
+}
+
+object htrouter {
+    name = ".htrouter.php"
+}
+
+object indexHTML {
+    name = "index.html"
+}
+
+phpDemo1 *-- sourceFiles
+phpDemo1 *-- includePath
+phpDemo1 *-- remoteFiles
+
+sourceFiles *-- phalcon
+sourceFiles *-- cache
+
+sourceFiles *-- publicFolder
+
+publicFolder *-- htaccess
+publicFolder *-- htrouter
+publicFolder *-- indexHTML
+
+@enduml
