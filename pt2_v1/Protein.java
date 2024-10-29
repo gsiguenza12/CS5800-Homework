@@ -15,9 +15,7 @@ public class Protein extends Macronutrient {
     private static final List<String> NUT_ALLERGY_PROTEINS = PROTEIN_OPTIONS;
     private String dietPlan;
 
-    public void setDietPlan(String dietPlan){
-        this.dietPlan = dietPlan;
-    }
+    public Protein(String dietPlan) { this.dietPlan = dietPlan; }
 
     @Override
     public String produce() {

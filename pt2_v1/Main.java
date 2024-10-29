@@ -18,10 +18,21 @@ public class Main {
         Customer customer5 = new Customer("riley", "Nut Allergy");
         Customer customer6 = new Customer("sally", "Paleo");
 
-        FactoryCreator factory = FactoryCreator.getInstance();
-        Macronutrient carb = factory.getMacronutrient("carb", customer1.getDietPlan());
-        String result = carb.produce();
-        System.out.println(result);
-
+//        FactoryCreator factory = FactoryCreator.getInstance();
+//        Macronutrient carb = factory.getMacronutrient("carb", customer1.getDietPlan());
+//        String result = carb.produce();
+//        System.out.println(result);
+        Meal meal1 = new Meal(customer1);
+        System.out.println("Customer: " + customer1.getName() + " Diet: " + customer1.getDietPlan() +  " Meal recommendation: " + meal1);
+        Meal meal2 = new Meal(customer2);
+        System.out.println("Customer: " + customer2.getName() + " Diet: " + customer2.getDietPlan() +  " Meal recommendation: " + meal2);
+        Meal meal3 = new Meal(customer3);
+        System.out.println("Customer: " + customer3.getName() + " Diet: " + customer3.getDietPlan() +  " Meal recommendation: " + meal3);
+        Meal meal4 = new Meal(customer4);
+        System.out.println("Customer: " + customer4.getName() + " Diet: " + customer4.getDietPlan() +  " Meal recommendation: " + meal4);
+        Meal meal5 = new Meal(customer5);
+        System.out.println("Customer: " + customer5.getName() + " Diet: " + customer5.getDietPlan() +  " Meal recommendation: " + meal5);
+        Meal meal6 = new Meal(customer6);
+        System.out.println("Customer: " + customer6.getName() + " Diet: " + customer6.getDietPlan() +  " Meal recommendation: " + meal6);
     }
 }

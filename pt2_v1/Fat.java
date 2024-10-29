@@ -15,9 +15,7 @@ public class Fat extends Macronutrient {
     private static final List<String> NUT_ALLERGY_FATS = Arrays.asList("Avocado", "Sour cream", "Tuna");
     private String dietPlan;
 
-    public void setDietPlan(String dietPlan){
-        this.dietPlan = dietPlan;
-    }
+    public Fat(String dietPlan) { this.dietPlan = dietPlan; }
 
     @Override
     public String produce() {

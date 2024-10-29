@@ -28,17 +28,25 @@ public class FactoryCreator {
 
     // ProteinFactory.java
     public static class ProteinFactory extends MacronutrientFactory {
+        private String dietPlan;
+        public ProteinFactory(String dietPlan){
+            this.dietPlan = dietPlan;
+        }
         @Override
         public Macronutrient createMacronutrient() {
-            return new Protein();
+            return new Protein(dietPlan);
         }
     }
 
     // FatsFactory.java
     public static class FatsFactory extends MacronutrientFactory {
+        private String dietPlan;
+        public FatsFactory(String dietPlan){
+            this.dietPlan = dietPlan;
+        }
         @Override
         public Macronutrient createMacronutrient() {
-            return new Fat();
+            return new Fat(dietPlan);
         }
     }
 
@@ -66,10 +74,10 @@ public class FactoryCreator {
                 return new CarbsFactory(dietPlan);
             case "PROTEIN":
                 System.out.println("protein set");
-                return new ProteinFactory();
+                return new ProteinFactory(dietPlan);
             case "FAT":
                 System.out.println("fat set");
-                return new FatsFactory();
+                return new FatsFactory(dietPlan);
         }
         /** TODO: Fix null return type **/
         System.out.println("ERROR, invalid macronutrient type!");
