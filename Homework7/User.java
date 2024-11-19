@@ -31,7 +31,6 @@ public class User {
     public void sendMessage(List<String> recipients, String content){
         Message message = new Message(name, recipients, content);
         for(String recipient : recipients) {
-            // TODO: Check that this method functions correctly
             chatHistory.addMessage(new MessageMemento(message), recipient);
         }
         mediator.sendMessage(message);
@@ -55,12 +54,11 @@ public class User {
     }
 
     public void iterateMessageHistoryByUser(User user) {
-        System.out.println("Inside the iterate messsage history by user method ");
         Iterator<MessageMemento> iterator = chatHistory.iterator(user);
-        chatHistory.printHistory();
-        System.out.println(iterator.hasNext());
+        // for debugging
+//        chatHistory.printHistory();
+//        System.out.println(iterator.hasNext());
         while(iterator.hasNext()) {
-            System.out.println("Inside the while loop");
             MessageMemento memento = iterator.next();
             System.out.println(name + " iterates over message from " + user.getName() + ": " + memento.getState());
         }
