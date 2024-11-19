@@ -1,7 +1,5 @@
 package com.company;
 
-import java.time.LocalTime;
-
 /**
  * A class that represents a snapshot of a message sent by a user. It should have properties for the message content
  * and timestamp.
@@ -13,7 +11,6 @@ public class MessageMemento {
            this.state = new State(message);
     }
 
-    // to undo, in external program call getState and replace the current
     public State getState(){
         return this.state;
     }

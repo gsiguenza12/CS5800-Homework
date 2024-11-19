@@ -55,9 +55,6 @@ public class User {
 
     public void iterateMessageHistoryByUser(User user) {
         Iterator<MessageMemento> iterator = chatHistory.iterator(user);
-        // for debugging
-//        chatHistory.printHistory();
-//        System.out.println(iterator.hasNext());
         while(iterator.hasNext()) {
             MessageMemento memento = iterator.next();
             System.out.println(name + " iterates over message from " + user.getName() + ": " + memento.getState());

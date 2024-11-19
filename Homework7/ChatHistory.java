@@ -13,7 +13,6 @@ public class ChatHistory implements IterableByUser{
     public void addMessage(MessageMemento memento, String recipients){
         history.push(memento);
         messageToUserMap.put(memento, recipients);
-//        System.out.println("Added message to history: " + memento.getState() + " at " + memento.getState());
     }
 
     public MessageMemento getLastMessage(){
@@ -44,13 +43,8 @@ public class ChatHistory implements IterableByUser{
 
         public ChatHistoryIterator(String userToSearchWith){
             System.out.println("ChatHistory Iterator called with userToSearchWith: " + userToSearchWith);
-            // for debugging
-//            System.out.println("Message to User Map: "+ messageToUserMap);
 
             for(MessageMemento memento : history){
-                // for debugging
-//                System.out.println("calling equals method on: " + messageToUserMap.get(memento) + " and " + userToSearchWith);
-//                System.out.println(messageToUserMap.get(memento).equals(userToSearchWith));
                 if (messageToUserMap.get(memento).equals(userToSearchWith)){
                     filteredMessages.add(memento);
                 }
@@ -59,15 +53,11 @@ public class ChatHistory implements IterableByUser{
 
         @Override
         public boolean hasNext(){
-            // for debugging
-//            System.out.println("index: " + index + "\nfilteredMessages.size(): " + filteredMessages.size());
             return index < filteredMessages.size();
         }
 
         @Override
         public MessageMemento next(){
-            // for debugging
-//            System.out.println("Inside the next() method");
             if(!hasNext()){
                 throw new NoSuchElementException();
             }
