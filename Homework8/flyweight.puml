@@ -1,0 +1,72 @@
+'comments indicated by single quotes'
+@startuml
+
+object document {
+    characters = ["H", "e", "l", "l", "o", "W"]
+    propertiesFactory
+}
+
+object H {
+    character = 'H'
+    characterProperty = H_property
+}
+
+object e {
+    character = 'e'
+    characterProperty = Arial_Black_12
+}
+
+object l1 {
+    character = 'l'
+    characterProperty = Arial_Black_12
+}
+
+object l2 {
+    character = 'l'
+    characterProperty = Arial_Black_12
+}
+
+object o {
+    character = 'o'
+    characterProperty = Arial_Black_12
+}
+'modification to the puml code to show part 2'
+
+object W {
+    character = 'W'
+    characterProperty = W_property
+}
+
+object H_property {
+    font = "Times New Roman"
+    color = "Red"
+    size = 14
+}
+
+object W_property {
+    font = "Verdana"
+    color = "Blue"
+    size = 16
+}
+
+object Arial_Black_12 {
+    font = "Arial"
+    color = "Black"
+    size = 12
+}
+
+document --* H : manages
+document --* e : manages
+document --* l1 : manages
+document --* l2 : manages
+document --* o : manages
+document --* W : manages
+
+H -- H_property : uses
+e -- Arial_Black_12 : uses
+l1 -- Arial_Black_12 : uses
+l2 -- Arial_Black_12 : uses
+o -- Arial_Black_12 : uses
+W -- W_property : uses
+
+@enduml
