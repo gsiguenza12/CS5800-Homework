@@ -329,6 +329,101 @@ stop
 
 @enduml
 
+' ==============================
+' Save Note State Activity UML
+' ==============================
+@startuml
+title Save Note State (Memento Pattern)
+
+start
+:User triggers save state;
+:Note creates Memento of current state;
+:MementoManager saves Memento;
+stop
+
+@enduml
+
+' ==============================
+' Restore Note State Activity UML
+' ==============================
+@startuml
+title Restore Note State (Memento Pattern)
+
+start
+:User triggers restore state;
+:MementoManager retrieves last saved Memento;
+:Note restores state from Memento;
+:Display restored Note state;
+stop
+
+@enduml
+
+
+' ==============================
+' Update Note Observers Activity UML
+' ==============================
+@startuml
+title Update Note Observers (Observer Pattern)
+
+start
+:User updates Note;
+:Note notifies observers;
+:Observers (TagSystem, SyncModule) update based on Note state;
+stop
+
+@enduml
+
+
+' ==============================
+' Display Note Content Activity UML
+' ==============================
+@startuml
+title Display Note Content
+
+start
+:User views Note;
+:Note calls display method;
+:Render Note with layout and shapes;
+stop
+
+@enduml
+
+
+' ==============================
+' Draw Shapes Activity UML
+' ==============================
+@startuml
+title Draw Shapes on a Note
+
+start
+:User selects drawing tool;
+repeat
+    :User draws shape;
+    :Note calls drawShape method;
+repeat while (More shapes to draw?)
+stop
+
+@enduml
+
+' ==============================
+' Manage Note Components Activity UML
+' ==============================
+@startuml
+title Manage Note Components
+
+start
+:User adds/removes child components;
+switch (Action)
+case (Add component)
+    :Call add method on Note;
+case (Remove component)
+    :Call remove method on Note;
+endswitch
+:Display updated Note;
+stop
+
+@enduml
+
 
 ' ==============================
 ' User Logging in Sequence UML
