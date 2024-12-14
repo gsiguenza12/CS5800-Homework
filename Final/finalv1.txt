@@ -1,0 +1,156 @@
+@startuml
+title Open Note App 
+
+class User {
+    - username: String
+    - password: String
+    + getUsername(): String
+    + setUsername(String username)
+    + setPassword(String password)
+    + login(username: String, password: String): boolean
+}
+
+interface NoteComponent {
+    + add(NoteComponent component)
+    + remove(NoteComponent component)
+    + getChild(int index): NoteComponent
+    + display()
+}
+
+class Note implements NoteComponent {
+    - title: String
+    - content: String
+    + add(NoteComponent component)
+    + remove(NoteComponent component)
+    + getChild(int index): NoteComponent
+    + display()
+    + setContent(String content)
+    + getContent(): String
+}
+
+class Subject implements NoteComponent {
+    - name: String
+    - children: List<NoteComponent>
+    + add(NoteComponent component)
+    + remove(NoteComponent component)
+    + getChild(int index): NoteComponent
+    + display()
+}
+
+abstract class NoteFactory {
+    + createNote(): Note
+}
+
+class GridNoteFactory extends NoteFactory {
+    + createNote(): Note
+}
+
+interface NoteObserver {
+    + update(note: Note)
+}
+
+class TagSystem implements NoteObserver {
+    + update(note: Note)
+}
+
+class SyncModule implements NoteObserver {
+    + update(note: Note)
+}
+
+class NoteObservable {
+    - observers: List<Observer>
+    + addObserver(Observer observer)
+    + removeObserver(Observer observer)
+    + notifyObservers()
+}
+
+interface Drawing {
+    + draw()
+}
+
+interface Pen {
+    + setColor(String color)
+    + setThickness(float thickness)
+    + drawLine()
+}
+
+class BasicDrawing implements Drawing {
+    + draw()
+}
+
+class DrawingDecorator implements Drawing {
+    - decoratedDrawing: Drawing
+    + draw()
+}
+
+class LineDrawing extends DrawingDecorator {
+    + draw()
+}
+
+class ShapeDrawing extends DrawingDecorator {
+    + draw()
+}
+
+
+class Highlighter implements Pen {
+    - color: String
+    - thickness: float
+    + setColor(String color)
+    + setThickness(float thickness)
+    + draw()
+}
+
+class Pencil implements Pen {
+    - color: String
+    - thickness: float
+    + setColor(String color)
+    + setThickness(float thickness)
+    + draw()
+}
+
+class BallpointPen implements Pen {
+    - color: String
+    - thickness: float
+    + setColor(String color)
+    + setThickness(float thickness)
+    + draw()
+}
+
+class DrawingTool {
+    - pen: Pen
+    - drawing: Drawing
+    + setPen(Pen pen)
+    + setDrawing(Drawing drawing)
+    + performDrawing()
+}
+
+'Relationships'
+
+NoteComponent <|.. Note
+NoteComponent <|.. Subject
+NoteFactory <|-- GridNoteFactory
+
+
+Note ..|> NoteObservable
+NoteObservable o-- NoteObserver
+NoteObserver <|.. TagSystem
+NoteObserver <|.. SyncModule
+Subject o-- NoteComponent : contains
+Subject "1" o-- "*" Note : contains notes
+Subject "1" o-- "*" Subject : contains subjects
+
+User "1" o-- "*" Note : manages notes
+User "1" o-- "*" Folder : manages folders
+
+DrawingDecorator o-- Drawing : wraps
+Drawing <|.. BasicDrawing
+DrawingDecorator <|-- LineDrawing
+DrawingDecorator <|-- ShapeDrawing
+
+Pen <|.. Highlighter
+Pen <|.. Pencil
+Pen <|.. BallpointPen
+DrawingTool o-- Pen : uses
+DrawingTool o-- Drawing : uses
+Drawing o-- Pen : uses
+@enduml

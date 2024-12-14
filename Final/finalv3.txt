@@ -1,0 +1,325 @@
+@startuml
+title Open Note App with Pen-Specific Drawings
+
+class User {
+    - username: String
+    - password: String
+    + getUsername(): String
+    + setUsername(String username)
+    + setPassword(String password)
+    + login(username: String, password: String): boolean
+}
+
+interface NoteComponent {
+    + add(NoteComponent component)
+    + remove(NoteComponent component)
+    + getChild(int index): NoteComponent
+    + display()
+}
+
+class Note implements NoteComponent {
+    - title: String
+    - content: String
+    + add(NoteComponent component)
+    + remove(NoteComponent component)
+    + getChild(int index): NoteComponent
+    + display()
+    + setContent(String content)
+    + getContent(): String
+}
+
+class LinedNote extends Note {
+    - lineSpacing: int
+    + setLineSpacing(int spacing)
+    + getLineSpacing(): int
+    + addLine(): void
+}
+
+class Subject implements NoteComponent {
+    - name: String
+    - children: List<NoteComponent>
+    + add(NoteComponent component)
+    + remove(NoteComponent component)
+    + getChild(int index): NoteComponent
+    + display()
+}
+
+abstract class NoteFactory {
+    + createNote(): Note
+}
+
+class GridNoteFactory extends NoteFactory {
+    + createNote(): Note
+}
+
+interface NoteObserver {
+    + update(note: Note)
+}
+
+class TagSystem implements NoteObserver {
+    + update(note: Note)
+}
+
+class SyncModule implements NoteObserver {
+    + update(note: Note)
+}
+
+class NoteObservable {
+    - observers: List<NoteObserver>
+    + addObserver(NoteObserver observer)
+    + removeObserver(NoteObserver observer)
+    + notifyObservers()
+}
+
+interface Drawing {
+    + drawShape(shape: String, color: String, thickness: float)
+}
+
+class BasicDrawing implements Drawing {
+    + drawShape(shape: String, color: String, thickness: float)
+}
+
+' Abstract Shape class
+abstract class Shape <<abstract>> {
+    + draw(Drawing drawing, String color, float thickness)
+}
+
+' Specific shapes
+class Circle extends Shape {}
+class Rectangle extends Shape {}
+class Square extends Shape {}
+class CurvedLine extends Shape {}
+class DashedLine extends Shape {}
+class Arrow extends Shape {}
+
+abstract class Pen {
+    - color: String
+    - thickness: float
+    - drawing: Drawing
+    + setColor(String color)
+    + setThickness(float thickness)
+    + getColor(): String
+    + getThickness(): float
+    + drawLine()
+    + drawShape(String shape)
+}
+
+class Highlighter extends Pen {
+    + drawLine()
+    + drawShape(String shape)
+}
+
+class Pencil extends Pen {
+    + drawLine()
+    + drawShape(String shape)
+}
+
+class BallpointPen extends Pen {
+    + drawLine()
+    + drawShape(String shape)
+}
+
+class DrawingTool {
+    - pen: Pen
+    + setPen(Pen pen)
+    + performDrawing(String shape)
+}
+
+' Relationships
+
+NoteComponent <|.. Note
+NoteComponent <|.. Subject
+NoteFactory <|-- GridNoteFactory
+
+Note ..|> NoteObservable
+NoteObservable o-- NoteObserver
+NoteObserver <|.. TagSystem
+NoteObserver <|.. SyncModule
+Subject o-- NoteComponent : contains
+
+User "1" o-- "*" Note : manages notes
+
+Drawing <|.. BasicDrawing
+Pen o-- Drawing : uses
+Pen <|-- Highlighter
+Pen <|-- Pencil
+Pen <|-- BallpointPen
+DrawingTool o-- Pen : uses
+
+@enduml
+@startuml
+title Open Note App with Page Templates and Pen-Specific Drawings
+
+class User {
+    - username: String
+    - password: String
+    + getUsername(): String
+    + setUsername(String username)
+    + setPassword(String password)
+    + login(username: String, password: String): boolean
+}
+
+interface NoteComponent {
+    + add(NoteComponent component)
+    + remove(NoteComponent component)
+    + getChild(int index): NoteComponent
+    + display()
+}
+
+' Abstract Note class that holds content and page layout
+abstract class Note implements NoteComponent {
+    - title: String
+    - content: String
+    - pageLayout: PageLayout
+    + add(NoteComponent component)
+    + remove(NoteComponent component)
+    + getChild(int index): NoteComponent
+    + display()
+    + setContent(String content)
+    + getContent(): String
+    + setPageLayout(PageLayout layout)
+    + getPageLayout(): PageLayout
+}
+
+' PageLayout interface that defines the template for note pages
+interface PageLayout {
+    + applyLayout(Note note)
+}
+
+' Concrete PageLayouts (Templates)
+class LinedNote implements PageLayout {
+    + applyLayout(Note note)
+}
+
+class GridNote implements PageLayout {
+    + applyLayout(Note note)
+}
+
+class BlankPageNote implements PageLayout {
+    + applyLayout(Note note)
+}
+
+' Subject class for composite behavior
+class Subject implements NoteComponent {
+    - name: String
+    - children: List<NoteComponent>
+    + add(NoteComponent component)
+    + remove(NoteComponent component)
+    + getChild(int index): NoteComponent
+    + display()
+}
+
+abstract class NoteFactory {
+    + createNote(): Note
+}
+
+' Factories for creating different note types with page layouts
+class GridNoteFactory extends NoteFactory {
+    + createNote(): Note
+}
+
+class LinedNoteFactory extends NoteFactory {
+    + createNote(): Note
+}
+
+class BlankPageNoteFactory extends NoteFactory {
+    + createNote(): Note
+}
+
+interface NoteObserver {
+    + update(note: Note)
+}
+
+class TagSystem implements NoteObserver {
+    + update(note: Note)
+}
+
+class SyncModule implements NoteObserver {
+    + update(note: Note)
+}
+
+class NoteObservable {
+    - observers: List<NoteObserver>
+    + addObserver(NoteObserver observer)
+    + removeObserver(NoteObserver observer)
+    + notifyObservers()
+}
+
+interface Drawing {
+    + drawShape(shape: String, color: String, thickness: float)
+}
+
+class BasicDrawing implements Drawing {
+    + drawShape(shape: String, color: String, thickness: float)
+}
+
+' Abstract Shape class
+abstract class Shape <<abstract>> {
+    + draw(Drawing drawing, String color, float thickness)
+}
+
+' Specific shapes
+class Circle extends Shape {}
+class Rectangle extends Shape {}
+class Square extends Shape {}
+class CurvedLine extends Shape {}
+class DashedLine extends Shape {}
+class Arrow extends Shape {}
+
+abstract class Pen {
+    - color: String
+    - thickness: float
+    - drawing: Drawing
+    + setColor(String color)
+    + setThickness(float thickness)
+    + getColor(): String
+    + getThickness(): float
+    + drawLine()
+    + drawShape(String shape)
+}
+
+class Highlighter extends Pen {
+    + drawLine()
+    + drawShape(String shape)
+}
+
+class Pencil extends Pen {
+    + drawLine()
+    + drawShape(String shape)
+}
+
+class BallpointPen extends Pen {
+    + drawLine()
+    + drawShape(String shape)
+}
+
+class DrawingTool {
+    - pen: Pen
+    + setPen(Pen pen)
+    + performDrawing(String shape)
+}
+
+' Relationships
+
+NoteComponent <|.. Note
+NoteComponent <|.. Subject
+NoteFactory <|-- GridNoteFactory
+NoteFactory <|-- LinedNoteFactory
+NoteFactory <|-- BlankPageNoteFactory
+
+Note ..|> NoteObservable
+NoteObservable o-- NoteObserver
+NoteObserver <|.. TagSystem
+NoteObserver <|.. SyncModule
+Subject o-- NoteComponent : contains
+
+User "1" o-- "*" Note : manages notes
+
+Drawing <|.. BasicDrawing
+Pen o-- Drawing : uses
+Pen <|-- Highlighter
+Pen <|-- Pencil
+Pen <|-- BallpointPen
+DrawingTool o-- Pen : uses
+
+@enduml
